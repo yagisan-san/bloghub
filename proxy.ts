@@ -46,5 +46,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/onboarding', '/login', '/signup', '/dashboard/reader-flow/:path*'],
+  matcher: ['/dashboard/:path*', '/onboarding', '/login', '/signup', '/forgot-password', '/reset-password', '/dashboard/reader-flow/:path*'],
 }
