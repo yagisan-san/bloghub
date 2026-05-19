@@ -116,16 +116,19 @@ export default async function DashboardLayout({
       </header>
 
       {/* ===== Mobile bottom nav ===== */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#e4e7f5] z-20 flex overflow-x-auto scrollbar-none"
-        style={{ boxShadow: '0 -1px 4px rgba(91,124,247,.06)' }}>
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#e4e7f5] z-20 flex"
+        style={{ boxShadow: '0 -2px 8px rgba(91,124,247,.08)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
           <Link
             key={href}
             href={href}
-            className="flex-shrink-0 min-w-[52px] flex flex-col items-center justify-center gap-0.5 py-2 text-[#9ca3af] hover:text-[#5b7cf7] transition-colors flex-1"
+            className="flex-1 flex flex-col items-center justify-center gap-1 py-3 min-h-[60px]
+              text-[#9ca3af] hover:text-[#5b7cf7]
+              active:bg-[#eef0fd] active:text-[#5b7cf7]
+              transition-all duration-100"
           >
-            <Icon size={18} />
-            <span className="text-[9px] font-medium leading-tight">{label}</span>
+            <Icon size={22} />
+            <span className="text-[10px] font-semibold leading-tight">{label}</span>
           </Link>
         ))}
       </nav>
@@ -135,7 +138,7 @@ export default async function DashboardLayout({
         {/* Mobile top spacer */}
         <div className="h-12 md:hidden" />
         {/* Content */}
-        <div className="pb-16 md:pb-0">
+        <div className="pb-20 md:pb-0">
           {children}
         </div>
       </div>

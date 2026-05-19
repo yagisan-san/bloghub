@@ -31,7 +31,7 @@ export function PublicNav({ username, hubTitle, isOwner = false }: Props) {
         <div className="flex items-center gap-1 mx-auto overflow-x-auto scrollbar-none">
           <Link
             href={base}
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0
+            className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-100 whitespace-nowrap flex-shrink-0 active:scale-95 active:bg-[#eef0fd]
               ${isActive(base)
                 ? 'bg-[#f0f4ff] text-[#5b7cf7]'
                 : 'text-[#6b7280] hover:text-[#5b7cf7] hover:bg-[#f5f7ff]'
