@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ViewTabs } from '@/components/ui/ViewTabs'
 import { GridView } from '@/components/hub/GridView'
 import { CategoryView } from '@/components/hub/CategoryView'
 import { OrderView } from '@/components/hub/OrderView'
 import { TreeView } from '@/components/hub/TreeView'
+import { PullToRefresh } from '@/components/ui/PullToRefresh'
 import { Content, ContentType, Profile, Hub, ViewMode } from '@/types/database'
 import { Mail } from 'lucide-react'
 
@@ -36,15 +37,39 @@ const MEDIA_FILTERS: { value: ContentType | 'all'; label: string }[] = [
   { value: 'other',       label: 'その他' },
 ]
 
+const VIEW_ORDER: ViewMode[] = ['grid', 'category', 'order', 'tree']
+
 export function HubPageClient({ profile, hub, contents, initialView }: Props) {
   const router = useRouter()
   const [view, setView] = useState<ViewMode>(initialView)
   const [search, setSearch] = useState('')
   const [mediaFilter, setMediaFilter] = useState<ContentType | 'all'>('all')
+  const touchStartXRef = useRef<number | null>(null)
 
   function handleViewChange(mode: ViewMode) {
     setView(mode)
     router.replace(`?view=${mode}`, { scroll: false })
+  }
+
+  function handleContentTouchStart(e: React.TouchEvent) {
+    touchStartXRef.current = e.touches[0].clientX
+  }
+
+  function handleContentTouchEnd(e: React.TouchEvent) {
+    if (touchStartXRef.current === null) return
+    const deltaX = e.changedTouches[0].clientX - touchStartXRef.current
+    touchStartXRef.current = null
+    if (Math.abs(deltaX) < 50) return
+    const currentIndex = VIEW_ORDER.indexOf(view)
+    if (deltaX < 0) {
+      // 左スワイプ → 次のタブ
+      const nextIndex = Math.min(currentIndex + 1, VIEW_ORDER.length - 1)
+      if (nextIndex !== currentIndex) handleViewChange(VIEW_ORDER[nextIndex])
+    } else {
+      // 右スワイプ → 前のタブ
+      const prevIndex = Math.max(currentIndex - 1, 0)
+      if (prevIndex !== currentIndex) handleViewChange(VIEW_ORDER[prevIndex])
+    }
   }
 
   // Compute which media types actually exist in contents
@@ -184,17 +209,23 @@ export function HubPageClient({ profile, hub, contents, initialView }: Props) {
       </div>
 
       {/* コンテンツ */}
-      <main className="max-w-5xl mx-auto px-6 py-10">
-        {(search || mediaFilter !== 'all') && (
-          <p className="text-sm text-[#6b7280] mb-4">
-            {filtered.length}件が見つかりました
-          </p>
-        )}
-        {view === 'grid'     && <GridView contents={filtered} />}
-        {view === 'category' && <CategoryView contents={filtered} />}
-        {view === 'order'    && <OrderView contents={filtered} />}
-        {view === 'tree'     && <TreeView contents={filtered} hubTitle={hub.title} />}
-      </main>
+      <PullToRefresh onRefresh={async () => { router.refresh() }}>
+        <main
+          className="max-w-5xl mx-auto px-6 py-10"
+          onTouchStart={handleContentTouchStart}
+          onTouchEnd={handleContentTouchEnd}
+        >
+          {(search || mediaFilter !== 'all') && (
+            <p className="text-sm text-[#6b7280] mb-4">
+              {filtered.length}件が見つかりました
+            </p>
+          )}
+          {view === 'grid'     && <GridView contents={filtered} />}
+          {view === 'category' && <CategoryView contents={filtered} />}
+          {view === 'order'    && <OrderView contents={filtered} />}
+          {view === 'tree'     && <TreeView contents={filtered} hubTitle={hub.title} />}
+        </main>
+      </PullToRefresh>
 
       {/* フッター */}
       <footer className="text-center py-8 text-xs text-[#9ca3af] border-t border-[#e4e7f5]">

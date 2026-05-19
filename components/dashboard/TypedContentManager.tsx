@@ -141,9 +141,28 @@ function InlineAddForm({
 }) {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
+  const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
   const [loading, setLoading] = useState(false)
+  const [ogpLoading, setOgpLoading] = useState(false)
   const [error, setError] = useState('')
+
+  async function handleUrlBlur() {
+    if (!url.trim()) return
+    setOgpLoading(true)
+    try {
+      const res = await fetch(`/api/ogp?url=${encodeURIComponent(url.trim())}`)
+      if (res.ok) {
+        const data = await res.json()
+        if (data.title && !title.trim()) setTitle(data.title)
+        if (data.description && !description.trim()) setDescription(data.description)
+      }
+    } catch {
+      // サイレントに失敗
+    } finally {
+      setOgpLoading(false)
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -166,6 +185,7 @@ function InlineAddForm({
         url: url.trim(),
         content_type: contentType,
         category: category.trim() || null,
+        description: description.trim() || null,
       }),
     })
 
@@ -188,21 +208,37 @@ function InlineAddForm({
         {meta.icon} {meta.label} を追加
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <Input
-          label="タイトル"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="記事・コンテンツのタイトル"
-          required
-        />
+        <div className="relative">
+          <Input
+            label="タイトル"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="記事・コンテンツのタイトル"
+            required
+          />
+          {ogpLoading && (
+            <span className="absolute right-3 top-8 text-xs text-[#9ca3af]">取得中...</span>
+          )}
+        </div>
         <Input
           label="URL"
           type="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
+          onBlur={handleUrlBlur}
           placeholder="https://"
           required
         />
+        <div className="flex flex-col gap-1.5">
+          <label className="text-sm font-semibold text-[#1e2340]">概要（任意）</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="記事の概要"
+            rows={2}
+            className="px-3.5 py-2.5 border-[1.5px] border-[#e4e7f5] rounded-[10px] text-sm bg-white text-[#1e2340] outline-none focus:border-[#5b7cf7] resize-y"
+          />
+        </div>
         {contentType === 'other' ? (
           <Input
             label="コンテンツ名（必須）"

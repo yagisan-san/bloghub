@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { TypedContentManager } from '@/components/dashboard/TypedContentManager'
+import { ManualAddBottomSheet } from '@/components/dashboard/ManualAddBottomSheet'
 import { Content } from '@/types/database'
 
 export default async function ContentsPage() {
@@ -24,7 +25,10 @@ export default async function ContentsPage() {
     <main className="max-w-3xl mx-auto px-4 py-6 flex flex-col gap-5">
       <div className="flex items-center justify-between mb-2">
         <h1 className="text-xl font-bold text-[#1e2340]">コンテンツ管理</h1>
-        <span className="text-sm text-[#6b7280]">{contents?.length ?? 0}件</span>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-[#6b7280]">{contents?.length ?? 0}件</span>
+          <ManualAddBottomSheet />
+        </div>
       </div>
 
       <TypedContentManager
