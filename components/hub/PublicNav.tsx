@@ -57,14 +57,22 @@ export function PublicNav({ username, hubTitle, isOwner = false }: Props) {
           </Link>
         </div>
 
-        {/* 右: 管理画面ボタン（オーナーのみ表示） */}
-        {isOwner && (
+        {/* 右: オーナー→管理画面 / 訪問者→ログイン */}
+        {isOwner ? (
           <Link
             href="/dashboard"
             className="shrink-0 text-xs font-medium px-3 py-1.5 rounded-lg border border-[#e4e7f5]
               text-[#6b7280] hover:text-[#5b7cf7] hover:border-[#c4b5fd] bg-white transition-colors"
           >
             管理画面
+          </Link>
+        ) : (
+          <Link
+            href="/signup"
+            className="shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#5b7cf7] text-white
+              hover:bg-[#4a6bf5] transition-colors"
+          >
+            始める
           </Link>
         )}
       </div>
