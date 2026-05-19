@@ -62,6 +62,7 @@ export default async function DashboardPage() {
     .limit(4)
 
   const uniqueCats = new Set(categories?.map((c) => c.category).filter(Boolean))
+  const viewCount = (hub as any)?.view_count ?? 0
   const publicUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://bloghub-sigma.vercel.app'}/u/${profile.username}`
 
   // 次にやることチェック
@@ -111,20 +112,48 @@ export default async function DashboardPage() {
 
       {/* スタッツ */}
       <div className="grid grid-cols-3 gap-3 mb-5">
-        {[
-          { label: '公開中の記事', value: count ?? 0, unit: '件', icon: '📄' },
-          { label: 'カテゴリ数', value: uniqueCats.size, unit: '', icon: '📁' },
-          { label: '最終更新', value: fmtDate(latestDate), unit: '', icon: '🕐' },
-        ].map((stat) => (
-          <div key={stat.label} className="bg-white rounded-2xl p-4 border border-[#e4e7f5]"
-            style={{ boxShadow: '0 1px 4px rgba(91,124,247,.06)' }}>
-            <span className="text-xl">{stat.icon}</span>
-            <p className="text-lg font-bold text-[#1e2340] mt-1 leading-tight">
-              {stat.value}<span className="text-xs font-normal text-[#6b7280]">{stat.unit}</span>
+        {/* カード1: 記事数 + カテゴリ数をまとめて */}
+        <div className="bg-white rounded-2xl p-4 border border-[#e4e7f5]"
+          style={{ boxShadow: '0 1px 4px rgba(91,124,247,.06)' }}>
+          <span className="text-xl">📄</span>
+          <div className="mt-1">
+            <p className="text-lg font-bold text-[#1e2340] leading-tight">
+              {count ?? 0}<span className="text-xs font-normal text-[#6b7280]">件</span>
             </p>
-            <p className="text-[10px] text-[#9ca3af] mt-0.5 leading-tight">{stat.label}</p>
+            <p className="text-[10px] text-[#9ca3af] leading-tight">記事</p>
           </div>
-        ))}
+          <div className="mt-1.5 pt-1.5 border-t border-[#f0f2f5]">
+            <p className="text-sm font-bold text-[#1e2340] leading-tight">
+              {uniqueCats.size}<span className="text-xs font-normal text-[#6b7280]">カテゴリ</span>
+            </p>
+          </div>
+        </div>
+
+        {/* カード2: 訪問者数 */}
+        <div className="bg-white rounded-2xl p-4 border border-[#e4e7f5]"
+          style={{ boxShadow: '0 1px 4px rgba(91,124,247,.06)' }}>
+          <span className="text-xl">👥</span>
+          <p className="text-lg font-bold text-[#1e2340] mt-1 leading-tight">
+            {viewCount.toLocaleString()}<span className="text-xs font-normal text-[#6b7280]">人</span>
+          </p>
+          <p className="text-[10px] text-[#9ca3af] mt-0.5 leading-tight">累計訪問者</p>
+        </div>
+
+        {/* カード3: 最終更新（年 / 月日で2行） */}
+        {(() => {
+          const d = latestDate ? new Date(latestDate) : null
+          const year = d ? `${d.getFullYear()}年` : '—'
+          const monthDay = d ? `${d.getMonth() + 1}月${d.getDate()}日` : ''
+          return (
+            <div className="bg-white rounded-2xl p-4 border border-[#e4e7f5]"
+              style={{ boxShadow: '0 1px 4px rgba(91,124,247,.06)' }}>
+              <span className="text-xl">🕐</span>
+              <p className="text-sm font-bold text-[#1e2340] mt-1 leading-tight">{year}</p>
+              {monthDay && <p className="text-sm font-bold text-[#1e2340] leading-tight">{monthDay}</p>}
+              <p className="text-[10px] text-[#9ca3af] mt-0.5 leading-tight">最終更新</p>
+            </div>
+          )
+        })()}
       </div>
 
       {/* 次にやること */}

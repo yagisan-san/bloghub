@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { Content, ContentType } from '@/types/database'
 import { PublicNav } from '@/components/hub/PublicNav'
+import { ViewTracker } from '@/components/hub/ViewTracker'
 
 interface Props {
   params: Promise<{ username: string }>
@@ -140,6 +141,7 @@ export default async function PublicHubPage({ params }: Props) {
   return (
     <div className="min-h-screen" style={{ background: theme.bg }}>
       <PublicNav username={username} hubTitle={hub.title} isOwner={user?.id === profile.id} />
+      <ViewTracker hubId={hub.id} />
 
       {/* ヒーローセクション */}
       <div className="border-b" style={{ background: theme.bg, borderColor: theme.cardBorder }}>
