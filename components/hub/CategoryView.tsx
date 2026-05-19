@@ -53,7 +53,12 @@ export function CategoryView({ contents }: { contents: Content[] }) {
     if (!groups[key]) groups[key] = []
     groups[key].push(c)
   }
-  const sorted = Object.entries(groups).sort((a, b) => b[1].length - a[1].length)
+  // カテゴリー内の最小display_orderで並び替え（ツリー・読む順番と連動）
+  const sorted = Object.entries(groups).sort((a, b) => {
+    const minA = Math.min(...a[1].map((c) => c.display_order ?? 9999))
+    const minB = Math.min(...b[1].map((c) => c.display_order ?? 9999))
+    return minA - minB
+  })
 
   if (!sorted.length) {
     return (
