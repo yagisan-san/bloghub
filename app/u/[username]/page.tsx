@@ -208,6 +208,50 @@ export default async function PublicHubPage({ params }: Props) {
         </div>
       </div>
 
+      {/* STEPガイド（おすすめの読む順番） */}
+      {(() => {
+        const orderedContents = contents.filter((c) => c.is_visible).slice(0, 5)
+        if (orderedContents.length < 2) return null
+        return (
+          <div className="border-b" style={{ borderColor: theme.cardBorder }}>
+            <div className="max-w-5xl mx-auto px-6 py-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-base font-bold" style={{ color: theme.text }}>
+                  📖 おすすめの読む順番
+                </h2>
+                <a href={`/u/${username}/all?view=order`}
+                  className="text-xs font-medium hover:underline"
+                  style={{ color: theme.accent }}>
+                  すべて見る →
+                </a>
+              </div>
+              <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-none">
+                {orderedContents.map((c, i) => (
+                  <a key={c.id} href={c.url} target="_blank" rel="noopener noreferrer"
+                    className="flex-shrink-0 w-52 rounded-2xl border p-4 hover:-translate-y-0.5 transition-all group"
+                    style={{ background: theme.cardBg, borderColor: theme.cardBorder, boxShadow: '0 1px 4px rgba(0,0,0,.06)' }}>
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full text-white text-sm font-bold mb-3 flex-shrink-0"
+                      style={{ background: theme.accent }}>
+                      {i + 1}
+                    </div>
+                    <p className="text-xs font-semibold leading-snug line-clamp-3"
+                      style={{ color: theme.text }}>
+                      {c.title}
+                    </p>
+                    {c.category && (
+                      <span className="inline-block mt-2 text-[10px] px-2 py-0.5 rounded-full"
+                        style={{ background: theme.accent + '20', color: theme.textMuted }}>
+                        {c.category}
+                      </span>
+                    )}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+      })()}
+
       {/* 種別カードグリッド */}
       <main className="max-w-5xl mx-auto px-6 py-5">
         {typeGroups.size === 0 ? (

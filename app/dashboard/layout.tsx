@@ -3,10 +3,8 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import {
   LayoutDashboard,
-  LayoutGrid,
-  FolderOpen,
-  BookOpen,
-  GitBranch,
+  FileText,
+  Navigation,
   Settings,
   Palette,
   LogOut,
@@ -14,13 +12,11 @@ import {
 } from 'lucide-react'
 
 const NAV_ITEMS = [
-  { href: '/dashboard',            label: 'ダッシュボード',   icon: LayoutDashboard },
-  { href: '/dashboard/contents',   label: 'コンテンツ管理',   icon: LayoutGrid },
-  { href: '/dashboard/categories', label: 'カテゴリ',         icon: FolderOpen },
-  { href: '/dashboard/order',      label: '読む順（ロードマップ）', icon: BookOpen },
-  { href: '/dashboard/tree',       label: 'ツリー構造',       icon: GitBranch },
-  { href: '/dashboard/design',     label: 'デザイン設定',     icon: Palette },
-  { href: '/dashboard/settings',   label: 'ハブ設定',         icon: Settings },
+  { href: '/dashboard',               label: 'ホーム',   icon: LayoutDashboard },
+  { href: '/dashboard/contents',      label: '記事',     icon: FileText },
+  { href: '/dashboard/reader-flow',   label: '読者導線', icon: Navigation },
+  { href: '/dashboard/design',        label: 'デザイン', icon: Palette },
+  { href: '/dashboard/settings',      label: '設定',     icon: Settings },
 ]
 
 export default async function DashboardLayout({
@@ -122,13 +118,14 @@ export default async function DashboardLayout({
       {/* ===== Mobile bottom nav ===== */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#e4e7f5] z-20 flex overflow-x-auto scrollbar-none"
         style={{ boxShadow: '0 -1px 4px rgba(91,124,247,.06)' }}>
-        {NAV_ITEMS.map(({ href, icon: Icon }) => (
+        {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
           <Link
             key={href}
             href={href}
-            className="flex-shrink-0 min-w-[48px] flex flex-col items-center justify-center py-3 text-[#9ca3af] hover:text-[#5b7cf7] transition-colors flex-1"
+            className="flex-shrink-0 min-w-[52px] flex flex-col items-center justify-center gap-0.5 py-2 text-[#9ca3af] hover:text-[#5b7cf7] transition-colors flex-1"
           >
-            <Icon size={16} />
+            <Icon size={18} />
+            <span className="text-[9px] font-medium leading-tight">{label}</span>
           </Link>
         ))}
       </nav>
