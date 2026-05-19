@@ -109,7 +109,7 @@ export default async function PublicHubPage({ params }: Props) {
 
   // 最終更新日
   const latestDate = contents
-    .map((c) => c.published_at)
+    .map((c) => c.published_at || c.created_at)
     .filter(Boolean)
     .sort()
     .at(-1) ?? null

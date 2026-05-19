@@ -41,7 +41,7 @@ export default async function DashboardPage() {
     .from('contents')
     .select('published_at, created_at')
     .eq('hub_id', hub?.id || '')
-    .order('published_at', { ascending: false })
+    .order('created_at', { ascending: false })
     .limit(1)
     .maybeSingle()
 
