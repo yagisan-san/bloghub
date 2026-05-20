@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import {
   DndContext,
   closestCenter,
@@ -118,6 +119,7 @@ export function ContentList({
 }: {
   initialContents: Content[]
 }) {
+  const router = useRouter()
   const [contents, setContents] = useState(initialContents)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -163,6 +165,7 @@ export function ContentList({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     })
+    router.refresh()
   }
 
   return (

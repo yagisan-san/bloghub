@@ -333,6 +333,7 @@ function GenericTabContent({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     })
+    router.refresh()
   }
 
   return (
@@ -694,6 +695,7 @@ function GenericTabContentWithPendingForm({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     })
+    router.refresh()
   }
 
   return (
