@@ -155,8 +155,8 @@ export default async function PublicHubPage({ params }: Props) {
             <img src={profile.cover_url} alt="カバー画像"
               className="w-full h-full object-cover" />
           )}
-          {/* アバターをカバー下端に半分はみ出して配置 */}
-          <div className="absolute -bottom-12 left-6 sm:left-10">
+          {/* アバターをカバー内の左下に配置 */}
+          <div className="absolute bottom-3 left-6 sm:left-10">
             {profile.avatar_url ? (
               <img src={profile.avatar_url} alt={profile.display_name || profile.username}
                 className="w-24 h-24 rounded-2xl border-4 object-cover"
@@ -171,8 +171,8 @@ export default async function PublicHubPage({ params }: Props) {
         </div>
 
         <div className="max-w-5xl mx-auto px-6">
-          {/* アバター分のスペーサー + タイトル・ID */}
-          <div className="pt-14 pb-2">
+          {/* タイトル・ID */}
+          <div className="pt-4 pb-2">
             <h1 className="text-xl sm:text-2xl font-bold" style={{ color: theme.text }}>{hub.title}</h1>
             <p className="text-sm mt-0.5" style={{ color: theme.textMuted }}>@{profile.username}</p>
           </div>
