@@ -35,9 +35,8 @@ export default function ForgotPasswordPage() {
       style={{ background: 'linear-gradient(140deg, #eef2ff 0%, #f7f8ff 50%, #f5f0ff 100%)' }}>
       <div className="w-full max-w-[420px]">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-[18px] text-white text-2xl mb-4"
-            style={{ background: 'linear-gradient(135deg, #5b7cf7, #a78bfa)', boxShadow: '0 6px 20px rgba(91,124,247,.35)' }}>
-            ✦
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-[18px] mb-4 bg-white" style={{ boxShadow: "0 6px 20px rgba(91,124,247,.2)" }}>
+            <img src="/logo.png" alt="BlogHub" className="w-10 h-10 object-contain" />
           </div>
           <h1 className="text-2xl font-bold text-[#1e2340] mb-1">BlogHub</h1>
         </div>

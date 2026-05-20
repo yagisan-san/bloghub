@@ -21,7 +21,7 @@ export function PublicNav({ username, hubTitle, isOwner = false }: Props) {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-4">
         {/* 左: ロゴ + ハブタイトル */}
         <Link href={base} className="flex items-center gap-2 shrink-0 min-w-0">
-          <span className="text-[#5b7cf7] font-black text-lg leading-none select-none">B</span>
+          <img src="/logo.png" alt="BlogHub" className="w-7 h-7 object-contain flex-shrink-0" />
           <span className="text-sm font-semibold text-[#1e2340] truncate max-w-[120px] sm:max-w-[160px]">
             {hubTitle}
           </span>

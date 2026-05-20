@@ -45,9 +45,7 @@ export default async function DashboardLayout({
 
         {/* Logo */}
         <div className="flex items-center gap-2.5 px-5 h-14 border-b border-[#e4e7f5] flex-shrink-0">
-          <div className="w-7 h-7 rounded-lg bg-[#5b7cf7] flex items-center justify-center flex-shrink-0">
-            <span className="text-white text-xs font-bold">B</span>
-          </div>
+          <img src="/logo.png" alt="BlogHub" className="w-7 h-7 object-contain flex-shrink-0" />
           <span className="font-bold text-[#1e2340] text-base tracking-tight">BlogHub</span>
         </div>
 

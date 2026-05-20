@@ -15,7 +15,10 @@ export default function LandingPage() {
       <header className="bg-white border-b border-[#e4e7f5]"
         style={{ boxShadow: '0 1px 4px rgba(91,124,247,.06)' }}>
         <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-          <span className="text-lg font-bold text-[#5b7cf7]">BlogHub ✦</span>
+          <span className="flex items-center gap-2 text-lg font-bold text-[#5b7cf7]">
+            <img src="/logo.png" alt="BlogHub" className="w-6 h-6 object-contain" />
+            BlogHub
+          </span>
           <div className="flex items-center gap-2">
             <Link href="/login"
               className="px-4 py-1.5 rounded-lg text-sm text-[#6b7280] hover:bg-[#f7f8ff] hover:text-[#1e2340] transition-colors font-medium">
@@ -32,9 +35,9 @@ export default function LandingPage() {
       {/* ヒーロー */}
       <section className="text-center pt-20 pb-16 px-4"
         style={{ background: 'linear-gradient(140deg, #eef2ff 0%, #f7f8ff 50%, #f5f0ff 100%)' }}>
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-[22px] text-white text-3xl mb-6"
-          style={{ background: 'linear-gradient(135deg, #5b7cf7, #a78bfa)', boxShadow: '0 8px 24px rgba(91,124,247,.35)' }}>
-          ✦
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-[22px] mb-6 bg-white"
+          style={{ boxShadow: '0 8px 24px rgba(91,124,247,.2)' }}>
+          <img src="/logo.png" alt="BlogHub" className="w-12 h-12 object-contain" />
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-[#1e2340] leading-tight mb-4">
           散らばった発信を、<br />
