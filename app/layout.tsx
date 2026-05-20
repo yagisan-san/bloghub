@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     description: "散らばった発信を、ひとつのホームに。",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "BlogHub",
+    description: "散らばった発信を、ひとつのホームに。",
+  },
 };
 
 export default function RootLayout({
