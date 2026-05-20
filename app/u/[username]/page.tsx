@@ -315,11 +315,34 @@ export default async function PublicHubPage({ params }: Props) {
                   const items = typeGroups.get(t)!
                   const meta = { ...TYPE_META[t], label: typeLabels[t] || TYPE_META[t].label }
                   const preview = items.slice(0, 2)
+                  // ブランドカラー定義
+                  const BRAND_COLORS: Record<string, { bg: string; text: string }> = {
+                    hatena:      { bg: '#00A4DE', text: '#fff' },
+                    note:        { bg: '#41C9B4', text: '#fff' },
+                    notion:      { bg: '#191919', text: '#fff' },
+                    pdf:         { bg: '#EF4444', text: '#fff' },
+                    youtube:     { bg: '#FF0000', text: '#fff' },
+                    spreadsheet: { bg: '#0F9D58', text: '#fff' },
+                    booth:       { bg: '#F6515B', text: '#fff' },
+                    other:       { bg: '#6b7280', text: '#fff' },
+                  }
+                  const brand = BRAND_COLORS[t] || { bg: theme.accent, text: '#fff' }
                   return (
                     <div key={t} className="rounded-2xl flex flex-col overflow-hidden"
                       style={{ background: theme.cardBg, boxShadow: '0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04)', border: `1px solid ${theme.cardBorder}` }}>
+                      {/* ブランドカラーヘッダー */}
+                      <div className="px-5 py-3 flex items-center justify-between"
+                        style={{ background: brand.bg }}>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xl">{meta.icon}</span>
+                          <span className="font-bold text-sm" style={{ color: brand.text }}>{meta.label}</span>
+                        </div>
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.25)', color: brand.text }}>
+                          {items.length}件
+                        </span>
+                      </div>
                       <div className="p-5 flex-1">
-                        <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center justify-between mb-3 hidden">
                           <div className="flex items-center gap-2">
                             <span className="text-xl">{meta.icon}</span>
                             <span className="font-semibold text-sm" style={{ color: theme.text }}>{meta.label}</span>

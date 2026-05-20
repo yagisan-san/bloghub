@@ -143,6 +143,7 @@ function InlineAddForm({
   const [url, setUrl] = useState('')
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
+  const [thumbnailUrl, setThumbnailUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [ogpLoading, setOgpLoading] = useState(false)
   const [error, setError] = useState('')
@@ -156,6 +157,7 @@ function InlineAddForm({
         const data = await res.json()
         if (data.title && !title.trim()) setTitle(data.title)
         if (data.description && !description.trim()) setDescription(data.description)
+        if (data.image && !thumbnailUrl) setThumbnailUrl(data.image)
       }
     } catch {
       // サイレントに失敗
@@ -186,6 +188,7 @@ function InlineAddForm({
         content_type: contentType,
         category: category.trim() || null,
         description: description.trim() || null,
+        thumbnail_url: thumbnailUrl || null,
       }),
     })
 
