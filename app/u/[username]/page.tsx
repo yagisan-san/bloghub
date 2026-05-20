@@ -145,8 +145,8 @@ export default async function PublicHubPage({ params }: Props) {
 
       {/* ヒーローセクション */}
       <div className="border-b" style={{ background: theme.bg, borderColor: theme.cardBorder }}>
-        {/* カバー画像（アバター・タイトル・IDを内包） */}
-        <div className="relative w-full h-64 sm:h-80"
+        {/* カバー画像（アバターのみ内包） */}
+        <div className="relative w-full h-36 sm:h-48"
           style={profile.cover_url
             ? undefined
             : { background: `linear-gradient(135deg, ${theme.accent} 0%, ${theme.accent}99 50%, ${theme.accent}55 100%)` }
@@ -155,32 +155,27 @@ export default async function PublicHubPage({ params }: Props) {
             <img src={profile.cover_url} alt="カバー画像"
               className="w-full h-full object-cover" />
           )}
-          {/* max-w-5xlに合わせた横位置で縦並び */}
-          <div className="absolute bottom-5 left-0 right-0">
-          <div className="max-w-5xl mx-auto px-6">
-          <div className="flex flex-col gap-2">
-            {/* アバター */}
+          {/* アバターをカバー下端に半分はみ出して配置 */}
+          <div className="absolute -bottom-12 left-6 sm:left-10">
             {profile.avatar_url ? (
               <img src={profile.avatar_url} alt={profile.display_name || profile.username}
-                className="w-40 h-40 rounded-3xl border-4 border-white/80 object-cover"
-                style={{ boxShadow: '0 4px 16px rgba(0,0,0,.25)' }} />
+                className="w-24 h-24 rounded-2xl border-4 object-cover"
+                style={{ borderColor: theme.bg, boxShadow: '0 4px 16px rgba(0,0,0,.2)' }} />
             ) : (
-              <div className="w-40 h-40 rounded-3xl flex items-center justify-center text-5xl font-bold"
-                style={{ background: theme.accent, color: theme.profileNameColor, boxShadow: '0 4px 16px rgba(0,0,0,.2)' }}>
+              <div className="w-24 h-24 rounded-2xl flex items-center justify-center text-3xl font-bold border-4"
+                style={{ background: theme.accent, color: '#fff', borderColor: theme.bg, boxShadow: '0 4px 16px rgba(0,0,0,.15)' }}>
                 {profile.display_name?.[0] || profile.username[0]}
               </div>
             )}
-            {/* タイトル・ID（アバターの下） */}
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold drop-shadow-md" style={{ color: theme.profileNameColor }}>{hub.title}</h1>
-              <p className="text-sm" style={{ color: theme.profileIdColor }}>@{profile.username}</p>
-            </div>
-          </div>
-          </div>
           </div>
         </div>
 
         <div className="max-w-5xl mx-auto px-6">
+          {/* アバター分のスペーサー + タイトル・ID */}
+          <div className="pt-14 pb-2">
+            <h1 className="text-xl sm:text-2xl font-bold" style={{ color: theme.text }}>{hub.title}</h1>
+            <p className="text-sm mt-0.5" style={{ color: theme.textMuted }}>@{profile.username}</p>
+          </div>
 
           {/* 説明文 ＋ スタッツ横並び */}
           <div className="flex flex-col sm:flex-row sm:items-start gap-5 mt-5 mb-4">
