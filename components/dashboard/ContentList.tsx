@@ -159,12 +159,18 @@ export function ContentList({
 
   async function handleDelete(id: string) {
     if (!confirm('この記事を削除しますか？')) return
-    setContents((prev) => prev.filter((c) => c.id !== id))
-    await fetch('/api/contents', {
+    const prev = [...contents]
+    setContents((c) => c.filter((item) => item.id !== id))
+    const res = await fetch('/api/contents', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     })
+    if (!res.ok) {
+      setContents(prev)
+      alert('削除に失敗しました。もう一度お試しください。')
+      return
+    }
     router.refresh()
   }
 

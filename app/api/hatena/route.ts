@@ -98,9 +98,12 @@ export async function POST(req: NextRequest) {
 
   const { entries: allEntries, nextPage: firstNext } = parseAtomServerSide(xml)
 
-  // ページネーション
+  // ページネーション（最大50ページ上限で無限ループ防止）
   let nextPage = firstNext
-  while (nextPage) {
+  let pageCount = 0
+  const MAX_PAGES = 50
+  while (nextPage && pageCount < MAX_PAGES) {
+    pageCount++
     const { xml: pageXml, status: pageStatus } = await fetchPage(hatenaId, apiKey, blogId, nextPage)
     if (pageStatus !== 200 || !pageXml) break
     const { entries, nextPage: np } = parseAtomServerSide(pageXml)

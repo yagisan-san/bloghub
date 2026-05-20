@@ -327,12 +327,18 @@ function GenericTabContent({
 
   async function handleDelete(id: string) {
     if (!confirm('このコンテンツを削除しますか？')) return
+    const prev = [...contents]
     onContentsChange(contents.filter((c) => c.id !== id))
-    await fetch('/api/contents', {
+    const res = await fetch('/api/contents', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     })
+    if (!res.ok) {
+      onContentsChange(prev)
+      alert('削除に失敗しました。もう一度お試しください。')
+      return
+    }
     router.refresh()
   }
 
@@ -689,12 +695,18 @@ function GenericTabContentWithPendingForm({
 
   async function handleDelete(id: string) {
     if (!confirm('このコンテンツを削除しますか？')) return
+    const prev = [...contents]
     onContentsChange(contents.filter((c) => c.id !== id))
-    await fetch('/api/contents', {
+    const res = await fetch('/api/contents', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     })
+    if (!res.ok) {
+      onContentsChange(prev)
+      alert('削除に失敗しました。もう一度お試しください。')
+      return
+    }
     router.refresh()
   }
 
