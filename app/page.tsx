@@ -37,7 +37,7 @@ export default function LandingPage() {
         style={{ background: 'linear-gradient(140deg, #eef2ff 0%, #f7f8ff 50%, #f5f0ff 100%)' }}>
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-[22px] mb-6 bg-white"
           style={{ boxShadow: '0 8px 24px rgba(91,124,247,.2)' }}>
-          <img src="/logo.png" alt="BlogHub" className="w-12 h-12 object-contain" />
+          <img src="/logo.png" alt="BlogHub" className="w-full h-full object-contain p-1" />
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-[#1e2340] leading-tight mb-4">
           散らばった発信を、<br />

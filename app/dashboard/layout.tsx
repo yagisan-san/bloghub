@@ -98,9 +98,7 @@ export default async function DashboardLayout({
       {/* ===== Mobile top bar ===== */}
       <header className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-[#e4e7f5] z-20 h-12 flex items-center px-4 gap-3"
         style={{ boxShadow: '0 1px 4px rgba(91,124,247,.06)' }}>
-        <div className="w-6 h-6 rounded-md bg-[#5b7cf7] flex items-center justify-center flex-shrink-0">
-          <span className="text-white text-xs font-bold">B</span>
-        </div>
+        <img src="/logo.png" alt="BlogHub" className="w-6 h-6 object-contain flex-shrink-0" />
         <span className="font-bold text-[#1e2340] text-sm tracking-tight flex-1">BlogHub</span>
         <a href={publicUrl} target="_blank" rel="noopener noreferrer"
           className="text-[#6b7280] hover:text-[#5b7cf7] transition-colors p-2">
